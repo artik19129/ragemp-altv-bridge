@@ -73,14 +73,16 @@ export class _Player extends _Entity {
     }
 
     set model(value) {
-        throw new Error('Setting player.model is not supported. Use player.setModelAsync instead');
+        throw new Error('Setting player.model is not supported. Set player.model on server side');
     }
 
     async setModelAsync(value) {
-        if (alt.Player.local !== this.alt) return;
-        const scriptID = this.handle;
-        emitServerInternal('setModel', value);
-        await alt.Utils.waitFor(() => this.handle !== scriptID);
+        throw new Error('Method setModelAsync is not supported. Set player.model on server side');
+
+        // if (alt.Player.local !== this.alt) return;
+        // const scriptID = this.handle;
+        // emitServerInternal('setModel', value);
+        // await alt.Utils.waitFor(() => this.handle !== scriptID);
     }
 
     get voiceVolume() {
@@ -1000,7 +1002,7 @@ mp.players = new ClientPool(view, [_Player]);
 mp.players.local = alt.Player.local.mp;
 
 alt.on('streamSyncedMetaChange', (player, key, newValue) => {
-    if (!(player instanceof alt.Player)) return;
+    if (player.type !== alt.BaseObjectType.Player && player.type !== alt.BaseObjectType.LocalPlayer) return;
     if (key === (internalName('alpha'))) {
         if (newValue === 255) {
             natives.resetEntityAlpha(player);
@@ -1011,7 +1013,7 @@ alt.on('streamSyncedMetaChange', (player, key, newValue) => {
 });
 
 alt.on('gameEntityCreate', (player) => {
-    if (!(player instanceof alt.Player)) return;
+    if (player.type !== alt.BaseObjectType.Player && player.type !== alt.BaseObjectType.LocalPlayer) return;
     alt.nextTick(() => {
         if (!player.valid || player.scriptID === 0) return;
         if (player.hasStreamSyncedMeta(internalName('alpha'))) {
