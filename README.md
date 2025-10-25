@@ -12,7 +12,7 @@
   <p align="center">
     A bridge that enables a swift transition from the RAGE Multiplayer platform to alt:V Multiplayer.
     <br />
-    <a href="https://docs.altv.mp/"><strong>Explore the docs »</strong></a>
+    <a href="https://deepwiki.com/artik19129/ragemp-altv-bridge/6.1-entity-pool-management"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://majestic-rp.ru">View Demo</a>
